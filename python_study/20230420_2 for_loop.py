@@ -116,11 +116,11 @@ for i in range(2, 31):
 #  2중 for 문
 # for i in range(1, 10): # 1 ~ 9
 #     print("2 *", i, "=", 2*i)
-# for i in range(2, 10): # 1 ~ 9
-#     print(i, "단")
-#     for j in range(1, 10): # 1 ~ 9
-#         print(i, "*", j, "=", i*j)
-#     print("------------")
+for i in range(2, 10): # 1 ~ 9
+    print(i, "단")
+    for j in range(1, 10): # 1 ~ 9
+        print(i, "*", j, "=", i*j)
+    print("------------")
 
 
 
