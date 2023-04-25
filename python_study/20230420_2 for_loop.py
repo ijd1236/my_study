@@ -41,7 +41,7 @@ for 변수 in iterable값:
 
 # for 문을 사용하여 10 부터 1까지 출력해보세요
 
-# for i in range(2, 31):
+# for i in range(5):
 #     print(i)
 """"
 # for i2 in range(2, 31, 2):
@@ -116,11 +116,11 @@ for i in range(2, 31):
 #  2중 for 문
 # for i in range(1, 10): # 1 ~ 9
 #     print("2 *", i, "=", 2*i)
-for i in range(2, 10): # 1 ~ 9
-    print(i, "단")
-    for j in range(1, 10): # 1 ~ 9
-        print(i, "*", j, "=", i*j)
-    print("------------")
+# for i in range(2, 10): # 1 ~ 9
+#     print(i, "단")
+#     for j in range(1, 10): # 1 ~ 9
+#         print(i, "*", j, "=", i*j)
+#     print("------------")
 
 
 

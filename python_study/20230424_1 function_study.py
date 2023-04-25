@@ -196,21 +196,21 @@ def 함수이름(함수입력값):
 # 1~ 10까지 더한다
 # *를 사용한 매개변수
 # 입력값이 몇개가 될지 정해지지 않았을 때 사용하게 된다.
-def add_many(*args):
-    # 튜플처럼 사용
-    # 인덱싱 ,슬라이싱 가능
-    result = 0
-    for i in args:
-        result += i
-    return result
+# def add_many(*args):
+#     # 튜플처럼 사용
+#     # 인덱싱 ,슬라이싱 가능
+#     result = 0
+#     for i in args:
+#         result += i
+#     return result
 
 
-result1= add_many(1, 2, 3, 4, 5)
-print(result1)
-result2 = add_many(3, 2, 5, 9, 1)
-print(result2)
-result3 = add_many(1, 2)
-print(result3)
+# result1= add_many(1, 2, 3, 4, 5)
+# print(result1)
+# result2 = add_many(3, 2, 5, 9, 1)
+# print(result2)
+# result3 = add_many(1, 2)
+# print(result3)
 
 # # 일반 매개변수랑 같이 사용 가능하다
 # def calc_many(n1, *args):
