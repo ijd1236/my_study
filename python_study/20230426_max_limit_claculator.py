@@ -10,13 +10,57 @@
 
 
 from my_calculator import MyCalculator
+
 class MaxLimitCalculator(MyCalculator):
-    pass
+    def add(self, a, b):
+        if a > 100 or b > 100:
+            print("100보다 작은  수를 입력하세요")
+        else : 
+            result = a + b
+            if result > 100 :
+                print("계산괄과가 100보다 작아야합니다")
+            else:
+                print(f"{a} + {b} = {a+b}")
+    def sub(self, a, b):
+        if a > 100 or b > 100:
+            print("100보다 작은  수를 입력하세요")
+        else : 
+            result = a - b
+            if result > 100 :
+                print("계산괄과가 100보다 작아야합니다")
+            else:
+                print(f"{a} - {b} = {a-b}")        
+    def mul(self, a, b):
+        if a > 100 or b > 100:
+            print("100보다 작은  수를 입력하세요")
+        else : 
+            result = a * b
+            if result > 100 :
+                print("계산괄과가 100보다 작아야합니다")
+            else:
+                print(f"{a} * {b} = {a*b}")
+    def div(self, a, b):
+        if a > 100 or b > 100:
+            print("100보다 작은  수를 입력하세요")
+        else:
+            try : 
+                result = a / b 
+            except ZeroDivisionError:
+                print("0으로 나누지 마세요")    
+            if result > 100 :
+                    print("계산괄과가 100보다 작아야합니다")
+            else:
+                print(f"{a} / {b} = {a/b}")
+
+
 
 maxlimitCalculator = MaxLimitCalculator()
 
-try:
-    maxlimitCalculator.div(5, 0)             
-except ZeroDivisionError:
-    print("0입력하지마")
+maxlimitCalculator.div(101, 100)
+
+
+# try:
+#     maxlimitCalculator.div(99, 99)             
+# except ZeroDivisionError:
+#     print("0입력하지마")  
 
