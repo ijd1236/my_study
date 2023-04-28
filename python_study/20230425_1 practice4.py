@@ -124,3 +124,4 @@ def print_stars2 (n):
 # def print_sters(n):
 #     for i in range(n):
 #         print((i + 1) * "*")
+

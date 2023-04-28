@@ -163,12 +163,12 @@ def 함수이름(함수입력값):
 # mul(1, 2)
 # mul(1) 
 
-# def test_func(x, test=[]):
-#     test.append(x)
-#     print(x, test)
+def test_func(x, test=[]):
+    test.append(x)
+    print(x, test)
 
-# test_func(1) # 1 [1]
-# test_func(2) # 1 [2, 3]
+test_func(1) # 1 [1]
+test_func(2) # 1 [2, 3]
 # 이렇게 리스트를 기본값으로 사용하면 값이 누적된다 그래서 리스트는 기본값으로 사용하기 적절치 않다
 
 # def test_func(x, test=5):
