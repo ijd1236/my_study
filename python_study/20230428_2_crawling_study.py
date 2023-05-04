@@ -132,3 +132,10 @@ for headline in headlines:
 #     print(idx, "번째 뉴스")
 #     flie_name = f""
 
+
+import numpy as np
+pthon_list = []
+n=10000
+
+rumpy_arr = np.arange(n)
+python_list = [1**3+10 for x in python_list]
