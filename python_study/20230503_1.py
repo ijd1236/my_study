@@ -146,7 +146,7 @@ import numpy as np
 
 # result = np.where(cond,xarr,yarr)
 # print(result)
-# # True 일땐 xarr Fals 일땐 yarr
+# True 일땐 xarr Fals 일땐 yarr
 
 # print(np.where(xarr>200,max(xarr),0))
 
@@ -169,7 +169,7 @@ import numpy as np
 # 단위행력
 # 대각원소 1이고, 나머지는 0인 n차 정방행렬을 말하며, numpy의 eye()함수를 사용하여서 만들 수 있음.
 
-import numpy as np
+# import numpy as np
 # identity = np.eye(4)
 # print(identity)
 
@@ -216,8 +216,8 @@ import numpy as np
 import pandas as pd
 
 
-obj = pd.Series([0,1,2,3,4,5,6,7], index=['a','b','c','d','e','f','g','h'],
-                                          dtype='int64')
+# obj = pd.Series([0,1,2,3,4,5,6,7], index=['a','b','c','d','e','f','g','h'],
+#                                           dtype='int64')
 # print(obj)
 
 # print(obj[[3]])
@@ -241,8 +241,8 @@ obj = pd.Series([0,1,2,3,4,5,6,7], index=['a','b','c','d','e','f','g','h'],
 
 # integer location based (iloc)
 
-obj = pd.Series([0,1,2,3,4,5,6,7], index=['a','b','c','d','e','f','g','h'],
-                                          dtype='int64')
+# obj = pd.Series([0,1,2,3,4,5,6,7], index=['a','b','c','d','e','f','g','h'],
+#                                           dtype='int64')
 
 # print(obj.iloc[2])
 
@@ -254,9 +254,9 @@ obj = pd.Series([0,1,2,3,4,5,6,7], index=['a','b','c','d','e','f','g','h'],
 
 # print(obj.loc['a':'c'])
 
-df = pd.DataFrame(np.arange(24).reshape(4,-1) ,
-                  columns = ['c1','c2','c3','c4','c5','c6'],
-                  index=['r1','r2','r3','r4'])
+# df = pd.DataFrame(np.arange(24).reshape(4,-1) ,
+#                   columns = ['c1','c2','c3','c4','c5','c6'],
+#                   index=['r1','r2','r3','r4'])
 
 # print(df)
 # print(df['c3'])
@@ -333,12 +333,12 @@ frame = pd.DataFrame(np.arange(9).reshape(3,3), index = list('abc'), columns = l
 # map
 # Series의 각각의 element들을 다른 어떤 값을 대체하는 역할.
 
-# series = pd.Series([100,200,300])
-# print(series)
+series = pd.Series([100,200,300])
+print(series)
 
-# print(series.map({100:'C',200:'B',300:'A'}))
+print(series.map({100:'C',200:'B',300:'A'}))
 
-# print(series.map('{}달러'.format))
+print(series.map('{}달러'.format))
 
 # f = lambda x : np.add(x,3)
 # print(series.map(f))
