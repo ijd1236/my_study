@@ -538,33 +538,33 @@ sampleSubmission = pd.read_csv('C:/Users/405/Desktop/bike-sharing-demand/sampleS
 
 # print(df_train['datetime'])
 
-df_train['date'] = df_train.datetime.apply(lambda x :x.split()[0])
-df_train['hour'] = df_train.datetime.apply(lambda x :x.split()[1].split(':')[0])
-df_train["weekday"] = df_train.date.apply(lambda dateString : calendar.day_name[
-    datetime.strptime(dateString,"%Y-%m-%d").weekday()])
-df_train["month"] = df_train.date.apply(lambda dateString : calendar.month_name[
-    datetime.strptime(dateString,"%Y-%m-%d").month])
-df_train["season"] = df_train.season.map({1: "Spring", 2 : "Summer", 3 : "Fall", 4 :"Winter" })
-df_train["weather"] = df_train.weather.map({1: " Clear + Few clouds + Partly cloudy + Partly cloudy",\
-                                        2 : " Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist ", \
-                                        3 : " Light Snow, Light Rain + Thunderstorm + Scattered clouds, Light Rain + Scattered clouds", \
-                                        4 :" Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog " })
+# df_train['date'] = df_train.datetime.apply(lambda x :x.split()[0])
+# df_train['hour'] = df_train.datetime.apply(lambda x :x.split()[1].split(':')[0])
+# df_train["weekday"] = df_train.date.apply(lambda dateString : calendar.day_name[
+#     datetime.strptime(dateString,"%Y-%m-%d").weekday()])
+# df_train["month"] = df_train.date.apply(lambda dateString : calendar.month_name[
+#     datetime.strptime(dateString,"%Y-%m-%d").month])
+# df_train["season"] = df_train.season.map({1: "Spring", 2 : "Summer", 3 : "Fall", 4 :"Winter" })
+# df_train["weather"] = df_train.weather.map({1: " Clear + Few clouds + Partly cloudy + Partly cloudy",\
+#                                         2 : " Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist ", \
+#                                         3 : " Light Snow, Light Rain + Thunderstorm + Scattered clouds, Light Rain + Scattered clouds", \
+#                                         4 :" Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog " })
 
-print(df_train.info())
+# # print(df_train.info())
 
-categoryVariablesList = ['hour','weekday','month','season','weather','holiday','workingday']
-for var in categoryVariablesList:
-    df_train[var] = df_train[var].astype('category')
-# print( df_train.info())
+# categoryVariablesList = ['hour','weekday','month','season','weather','holiday','workingday']
+# for var in categoryVariablesList:
+#     df_train[var] = df_train[var].astype('category')
+# # print( df_train.info())
 
 
-# 결측치 확인.
+# # 결측치 확인.
 
-df_train.isna().sum()
-#df_train.isnull().sum()
+# df_train.isna().sum()
+# #df_train.isnull().sum()
 
-import missingno as msno #결측치 보는 plot
-msno.matrix(df_train,figsize=(12,5)) #결측치가 있다면 하얀색 줄이 그어짐.
+# import missingno as msno #결측치 보는 plot
+# msno.matrix(df_train,figsize=(12,5)) #결측치가 있다면 하얀색 줄이 그어짐.
 
 
 
@@ -573,7 +573,7 @@ df_train_1 = df_train.copy() #훼손 방지
 df_test_1 = df_test.copy()
 
 df_train_1['datetime'] = pd.to_datetime(df_train_1['datetime'])
-print(type(df_train_1))
+# print(type(df_train_1))
 
 #dataFrame 가능한 것.
 df_train_1['year'] = df_train_1['datetime'].dt.year
@@ -584,3 +584,283 @@ df_train_1['minute'] = df_train_1['datetime'].dt.minute
 df_train_1['second'] = df_train_1['datetime'].dt.second
 #요일 데이터 - 일요일은 0
 df_train_1['dayofweek'] = df_train_1['datetime'].dt.dayofweek
+
+fig, ((ax1, ax2, ax3),(ax4, ax5,ax6))=plt.subplots(nrows=2,ncols=3)
+fig.set_size_inches(18,8)
+
+sns.barplot(data = df_train_1, x='year', y='count',ax=ax1)
+sns.barplot(data = df_train_1, x='month', y='count',ax=ax2)
+sns.barplot(data = df_train_1, x='day', y='count',ax=ax3)
+sns.barplot(data = df_train_1, x='hour', y='count',ax=ax4)
+sns.barplot(data = df_train_1, x='minute', y='count',ax=ax5)
+sns.barplot(data = df_train_1, x='second', y='count',ax=ax6)
+
+ax1.set(ylabel='count', title='Year rental amount')
+ax2.set(ylabel='month', title='month rental amount')
+ax3.set(ylabel='day', title='Day rental amount')
+ax4.set(ylabel='hour', title='Hour rental amount')
+
+# plt.show()
+
+
+# Month rental amount을 보면, 겨울로 분리되는 12월의 경우 초봄인 3~4월의 대여량과 비슷하다는 점이었다. 
+# 워싱턴의 날씨 변화는 우리나라의 사계절과 비슷하다. (여기서 알수 있는 점은 계절의 영향은 별로 없구나)
+
+# 또한 hour 파트에서 아침7시와 저녁 6~7시의 수요량이 다른 시간대들과 비교했을 때 굉장히 높은 것을 알 수 있다. 
+# 이는 출퇴근길에 자전거를 많이 이용하는 사람들이 많다고 예측해 볼 수 있다. (주말과 나눠서 보는 것이 필요하다.) 혹시라도 뭐가 다를지 모르겠어서
+
+# 일별 대여량은 1일부터 19일까지만 있고 나머지 날짜의 경우는 test데이터에 들어가있다. 따라서 이 변수는 피쳐로 사용하면 안 된다!
+
+
+
+# Quantile, Quartile, Percentile 개념 정리
+# 참고 : https://blog.eunsukim.me/posts/understanding-quantile-quartile-and-percentile
+
+
+fig, axes = plt.subplots(nrows=2,ncols=2)
+fig.set_size_inches(18,8)
+
+sns.boxplot(data = df_train_1, y='count',orient='v',ax=axes[0][0])
+sns.boxplot(data = df_train_1, y='count',x='season',orient='v',ax=axes[0][1])
+sns.boxplot(data = df_train_1, y='count',x='hour',orient='v',ax=axes[1][0])
+sns.boxplot(data = df_train_1, y='count',x='workingday',orient='v',ax=axes[1][1])
+
+axes[0][0].set(ylabel='count', title='Rental amount')
+axes[0][1].set(xlabel='Season',ylabel='Count', title='Seasonal rental amount')
+axes[1][0].set(xlabel='Hour of The Day',ylabel='Count', title='Hour rental amount')
+axes[1][1].set(xlabel='Working Day',ylabel='Count', title='Working or')
+
+
+
+fig, (ax1,ax2,ax3,ax4,ax5) = plt.subplots(nrows=5)
+fig.set_size_inches(18,25)
+
+#꺽은선 그래프.
+sns.pointplot(data =df_train_1, x='hour',y='count',ax=ax1)
+
+sns.pointplot(data =df_train_1, x='hour',y='count',hue='workingday',ax=ax2)
+
+sns.pointplot(data =df_train_1, x='hour',y='count',hue='dayofweek',ax=ax3)
+
+sns.pointplot(data =df_train_1, x='hour',y='count',hue='weather',ax=ax4)
+
+sns.pointplot(data =df_train_1, x='hour',y='count',hue='season',ax=ax5)
+
+# plt.show()
+
+# 위 그래프를 보면 대여량은 특정 기간에 머물러 있고 특히 근무일이 아닐 때 대여량이 더 많은 것을 알 수 있다.
+
+# 상관관계
+
+corrMatt = df_train_1.corr()
+# print(corrMatt)
+mask = np.array(corrMatt)
+#Return the indices for the upper-triangle of arr.
+#상삼각행렬
+mask[np.tril_indices_from(mask)] = False #상삼각행렬 False -> 하삼각행렬
+
+fig,ax = plt.subplots()
+fig.set_size_inches(20,10)
+sns.heatmap(corrMatt, mask=mask, vmax=.8, square=True, annot=True)
+
+
+
+
+# regplot으로 산점도 plot을 그림
+
+fig, (ax1,ax2,ax3) = plt.subplots(ncols=3)
+fig.set_size_inches(12,5)
+sns.regplot(x='temp',y='count',data = df_train_1,ax=ax1)
+sns.regplot(x='windspeed',y='count',data = df_train_1,ax=ax2)
+sns.regplot(x='humidity',y='count',data = df_train_1,ax=ax3)
+
+#temp,winspeed, humidity -> 회귀로 절대로 못맞침
+#(상관계수가 낮음->scatter->drop하는것이 좋지 않을까?)->항상 좋을까?->실험적이여야 함.
+
+
+
+
+
+# 월별 데이터 모아보기
+
+def concatenate_year_month(datetime):
+    return "{0}-{1}".format(datetime.year, datetime.month)
+df_train_1["year_month"] = df_train_1["datetime"].apply(concatenate_year_month)
+# print(df_train_1.shape)
+# print(df_train_1[["datetime", "year_month"]].head())
+# print(df_train_1)
+
+fig, (ax1,ax2) = plt.subplots(nrows=1, ncols=2)
+fig.set_size_inches(18,4)
+
+sns.barplot(data = df_train_1, x='year',y='count',ax=ax1)
+sns.barplot(data = df_train_1, x='month',y='count',ax=ax2)
+
+fig,ax3 = plt.subplots(nrows=1,ncols=1)
+fig.set_size_inches(18,4)
+
+sns.barplot(data=df_train_1,x='year_month',y='count',ax=ax3)
+
+# plt.show()
+
+
+# 이상치 처리
+# 방법1) IQR(Interquartile Range) = Q3(75%)-Q1(25%)
+# Q1−1.5∗IQR :   최소 제한선
+
+# Q3+1.5∗IQR :   최대 제한선
+
+# 범위를 좀 더 조정
+
+
+#'count' 데이터에서 전체의 25%에 해당하는 데이터 조회
+count_q1 = np.percentile(df_train_1['count'],25)
+count_q1
+
+#'count' 데이터에서 전체의 75%에 해당하는 데이터 조회
+count_q3 = np.percentile(df_train_1['count'],75)
+count_q3
+
+# IQR = Q3-Q1
+count_IQR = count_q3 - count_q1
+count_IQR
+
+# 이상치를 제외한(이상치가 아닌 구간에 있는) 데이터만 조회
+df_train_IQR = df_train_1[(df_train_1['count']>=(count_q1 - (1.5*count_IQR))) &
+                          (df_train_1['count']<=(count_q3 + (1.5*count_IQR)))]
+# print(df_train_IQR)
+
+# 방법2) 3-sigma, 평균  ±  3* 표준편차차
+
+df_train_1_sigma = df_train_1[np.abs(df_train_1['count'] - df_train_1['count'].mean()) < 
+                              (3*df_train_1['count'].std())]
+
+
+
+
+# fig, axes = plt.subplots(nrows=2,ncols=2)
+# fig.set_size_inches(18,8)
+
+# sns.boxplot(data = df_train_1_IQR, y='count',orient='v',ax=axes[0][0])
+# sns.boxplot(data = df_train_1_IQR, y='count',x='season',orient='v',ax=axes[0][1])
+# sns.boxplot(data = df_train_1_IQR, y='count',x='hour',orient='v',ax=axes[1][0])
+# sns.boxplot(data = df_train_1_IQR, y='count',x='workingday',orient='v',ax=axes[1][1])
+
+# axes[0][0].set(ylabel='count', title='Rental amount')
+# axes[0][1].set(xlabel='Season',ylabel='Count', title='Seasonal rental amount')
+# axes[1][0].set(xlabel='Hour of The Day',ylabel='Count', title='Hour rental amount')
+# axes[1][1].set(xlabel='Working Day',ylabel='Count', title='Working or nor Rental amount')
+
+# plt.show()
+
+
+dataTrain = pd.read_csv('C:/Users/405/Desktop/bike-sharing-demand/train.csv')
+dataTest = pd.read_csv('C:/Users/405/Desktop/bike-sharing-demand/test.csv')
+
+print
+# data = dataTrain.append(dataTest)
+# data.reset_index(inplace=True)
+# data.drop('index',inplace=True,axis=1)
+
+
+# # print(data)
+
+
+# data['date'] = data.datetime.apply(lambda x:x.split()[0])
+# data['hour'] = data.datetime.apply(lambda x:x.split()[1].split(':')[0]).astype('int')
+# data['year'] = data.datetime.apply(lambda x:x.split()[0].split('-')[0])
+# data['weekday'] = data.date.apply(lambda dateString : datetime.strptime(dateString,'%Y-%m-%d').weekday())
+# data['month'] = data.date.apply(lambda dateString : datetime.strptime(dateString,'%Y-%m-%d' ).month)
+
+# categoricalFeatureNames=['season','holiday','workingday','weather','weekday','month','year','hour']
+# numericalFeatureName = ['temp','humidity','windspeed','atemp']
+# dropFeatures = ['casual','count','datetime','date','registered']
+
+# for var in categoricalFeatureNames:
+#     data[var] = data[var].astype('category')
+
+
+
+# dataTrain = data[pd.notnull(data['count'])].sort_values(by=['datetime'])
+# dataTest = data[~pd.notnull(data['count'])].sort_values(by=['datetime'])
+# datetimecol = dataTest['datetime']
+# yLabels = dataTrain['count']
+# yLabelsRegistered = dataTrain['registered']
+# yLabelsCasual = dataTrain['casual']
+
+
+
+# dataTrain = dataTrain.drop(dropFeatures,axis=1)
+# dataTest = dataTest.drop(dropFeatures,axis=1)
+
+
+# def rmsle(y, y_,convertExp=True):
+#     if convertExp:
+#         y = np.exp(y),
+#         y_ = np.exp(y_)
+#     log1 = np.nan_to_num(np.array([np.log(v + 1) for v in y]))
+#     log2 = np.nan_to_num(np.array([np.log(v + 1) for v in y_]))
+#     calc = (log1 - log2) ** 2
+#     return np.sqrt(np.mean(calc))
+
+# #np.nan_to_num : Replace NaN with zero and infinity with large finite numbers (default behaviour) 
+# #or with the numbers defined by the user using the nan, posinf and/or neginf keywords.
+
+
+
+# from sklearn.metrics import mean_squared_error,mean_absolute_error
+# def rmsle(y,pred):
+#     log_y = np.log1p(y)
+#     log_pred = np.log1p(pred)
+#     squared_error = (log_y-log_pred)**2
+#     rmsle = np.sqrt(np.mean(squared_error))
+#     return rmsle
+# #sklearn의 mean_squared_error 이용해 RMSE계산
+# def rmse(y,pred):
+#     return np.sqrt(mean_squared_error(y,pred))
+
+
+# #MSE, RMSE, RMSLE 계산
+# def evaluate_rgre(y,pred):
+#     rmsle_val = rmsle(y,pred)
+#     rmse_val = rmse(y,pred)
+#     mae_val = mean_absolute_error(y,pred)
+#     print('RMSLE:{0:.3f}, RMSE:{1:.3f}, MAE:{2:.3f}'.format(rmsle_val,rmse_val,mae_val))
+
+
+# # Numeri으로 변환
+
+# #분리를 통해 추출된 속성은 문자열 속성을 가지고 있음 따라서 숫자형 데이터로 변환해 줄 필요가 있음.
+# #pandas.to_numeric(): https://pandas.pydata.org/pandas-docs/stable/generated/pandas.to_numeric.html
+# #errors='coerce' : 만약 숫자로 변경할 수 없는 데이터라면 기존 데이터를 지우고 NaN으로 설정하여 반환.
+# dataTrain['year'] = pd.to_numeric(dataTrain.year,errors='coerce')
+# dataTrain['month'] = pd.to_numeric(dataTrain.month,errors='coerce')
+# dataTrain['hour'] = pd.to_numeric(dataTrain.hour,errors='coerce')
+# dataTrain['weekday'] = pd.to_numeric(dataTrain.weekday,errors='coerce')
+
+# dataTrain['season'] = pd.to_numeric(dataTrain.season,errors='coerce')
+# dataTrain['holiday'] = pd.to_numeric(dataTrain.holiday,errors='coerce')
+# dataTrain['workingday'] = pd.to_numeric(dataTrain.workingday,errors='coerce')
+# dataTrain['weather'] = pd.to_numeric(dataTrain.weather,errors='coerce')
+
+
+# # Linear Regression Model
+
+
+# from sklearn.linear_model import LinearRegression,Ridge,Lasso
+# from sklearn.model_selection import GridSearchCV
+# from sklearn import metrics
+# import warnings
+# pd.options.mode.chained_assignment = None
+# warnings.filterwarnings("ignore", category=DeprecationWarning)
+
+# # Initialize logistic regression model
+# lModel = LinearRegression()
+
+# # Train the model
+# yLabelsLog = np.log1p(yLabels)
+# lModel.fit(X = dataTrain,y = yLabelsLog)
+
+# # Make predictions
+# preds = lModel.predict(X= dataTrain)
+# print ("RMSLE Value For Linear Regression: ",rmsle(np.exp(yLabelsLog),np.exp(preds)))
