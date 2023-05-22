@@ -9,6 +9,12 @@
 # float_vlaue = float(input("실수 입력:"))
 # print(float_vlaue)
 
-print(0.1+0.2)
-print(float(0.1+0.2))
-print(float(2))
+# print(0.1+0.2)
+# print(float(0.1+0.2))
+# print(float(2))
+
+
+a = [1,2,3]
+
+print(a[-1])
+
